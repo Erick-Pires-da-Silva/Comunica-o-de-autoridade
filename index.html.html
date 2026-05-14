@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comunicação de Autoridade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:#050505; --soft-black:#0b0a08; --panel:#11100d; --gold:#d6a400; --gold-2:#f2c23a; --white:#f8f4ea; --muted:#c8c1b5; --line:rgba(214,164,0,.28);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Montserrat', sans-serif; background:var(--black); color:var(--white); line-height:1.65; overflow-x:hidden; font-weight:300; }
+    .container { width:min(1180px, 90%); margin:auto; }
+    .gold { color:var(--gold); }
+    .topbar { position:fixed; top:0; left:0; width:100%; z-index:20; background:rgba(5,5,5,.78); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+    .topbar .container { display:flex; justify-content:space-between; align-items:center; padding:14px 0; gap:18px; }
+    .brand { font-family:'Oswald',sans-serif; letter-spacing:3px; text-transform:uppercase; font-weight:300; font-size:1.05rem; }
+    .safe { display:flex; gap:22px; flex-wrap:wrap; font-size:.78rem; color:var(--muted); }
+    .hero { min-height:100vh; padding:130px 0 80px; display:flex; align-items:center; position:relative; background:radial-gradient(circle at 70% 18%, rgba(214,164,0,.18), transparent 28%), radial-gradient(circle at 18% 70%, rgba(255,255,255,.08), transparent 22%), linear-gradient(180deg,#080806 0%,#050505 100%); }
+    .hero::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(214,164,0,.07) 0 1px,transparent 1px), linear-gradient(rgba(214,164,0,.04) 0 1px,transparent 1px); background-size:80px 80px; mask-image:radial-gradient(circle at center, black, transparent 70%); opacity:.35; }
+    .hero-grid { position:relative; z-index:1; display:grid; grid-template-columns:.9fr 1.1fr; gap:70px; align-items:center; }
+    .eyebrow { display:inline-block; color:var(--gold); border:1px solid var(--line); border-radius:999px; padding:8px 18px; letter-spacing:4px; text-transform:uppercase; font-size:.78rem; margin-bottom:24px; font-weight:300; }
+    h1 { font-family:'Oswald', sans-serif; font-size:clamp(3.2rem,7vw,7rem); line-height:.95; letter-spacing:4px; text-transform:uppercase; font-weight:300; margin-bottom:28px; }
+    .hero p { color:var(--muted); font-size:1.13rem; max-width:670px; margin-bottom:18px; font-weight:300; }
+    .cta { display:inline-flex; align-items:center; justify-content:center; gap:10px; margin-top:24px; padding:18px 34px; min-height:58px; border-radius:10px; background:linear-gradient(135deg,var(--gold-2),var(--gold)); color:#090806; text-decoration:none; text-transform:uppercase; letter-spacing:1px; font-weight:600; box-shadow:0 0 34px rgba(214,164,0,.24); transition:.25s ease; }
+    .cta:hover { transform:translateY(-3px); box-shadow:0 0 52px rgba(214,164,0,.34); }
+    .micro { display:block; margin-top:16px; color:#aaa196; font-size:.84rem; }
+    .mockup-wrap { perspective:1200px; display:flex; justify-content:center; }
+    .book-3d { position:relative; width:min(360px,84vw); transform:rotateY(-16deg) rotateX(3deg); transform-style:preserve-3d; filter:drop-shadow(0 32px 48px rgba(0,0,0,.72)); }
+    .book-3d::before { content:''; position:absolute; top:3.5%; right:-34px; width:34px; height:93%; background:linear-gradient(90deg,#1c1712,#080808 65%,#3a2b10); transform:rotateY(90deg); transform-origin:left; border:1px solid rgba(255,255,255,.08); }
+    .book-3d::after { content:''; position:absolute; left:7%; right:2%; bottom:-22px; height:28px; background:radial-gradient(ellipse,rgba(214,164,0,.28),transparent 70%); filter:blur(8px); transform:translateZ(-20px); }
+    .book-3d img { width:100%; display:block; border-radius:6px; border:1px solid rgba(255,255,255,.16); box-shadow:inset 0 0 30px rgba(255,255,255,.14); }
+    .spine { position:absolute; top:3.5%; left:-26px; width:30px; height:93%; background:linear-gradient(90deg,#030303,#16120d 45%,#2a210c); transform:rotateY(-90deg); transform-origin:right; border:1px solid rgba(214,164,0,.18); }
+    .badges { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:38px; max-width:800px; }
+    .badge { border-left:1px solid var(--line); padding:8px 16px; color:var(--muted); font-size:.8rem; text-transform:uppercase; letter-spacing:.6px; }
+    section { padding:90px 0; }
+    .dark-panel { background:#080807; border-top:1px solid rgba(214,164,0,.14); border-bottom:1px solid rgba(214,164,0,.14); }
+    .title { font-family:'Oswald',sans-serif; font-size:clamp(2.2rem,4vw,4rem); line-height:1.1; text-transform:uppercase; letter-spacing:2px; font-weight:300; text-align:center; margin-bottom:18px; }
+    .subtitle { max-width:760px; margin:0 auto 52px; text-align:center; color:var(--muted); font-size:1.05rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; }
+    .card { background:linear-gradient(145deg,#11100d,#090908); border:1px solid rgba(214,164,0,.17); border-radius:18px; padding:28px; min-height:170px; transition:.25s ease; }
+    .card:hover { transform:translateY(-5px); border-color:rgba(214,164,0,.46); }
+    .card h3 { color:var(--gold-2); margin-bottom:10px; font-weight:400; letter-spacing:.5px; }
+    .card p,.card li { color:var(--muted); font-weight:300; }
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+    ul { padding-left:18px; }
+    li { margin-bottom:10px; }
+    .method { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+    .letter { font-family:'Oswald'; font-size:4rem; line-height:1; color:var(--gold); font-weight:300; margin-bottom:10px; }
+    .offer { background:radial-gradient(circle at 50% 0%,rgba(214,164,0,.18),transparent 36%),#050505; text-align:center; }
+    .price { font-family:'Oswald',sans-serif; font-size:4.8rem; font-weight:300; color:var(--gold-2); line-height:1; margin:20px 0; }
+    .guarantee { margin:34px auto 0; max-width:620px; border:1px solid var(--line); border-radius:18px; padding:22px; color:var(--muted); background:rgba(214,164,0,.05); }
+    footer { padding:34px 0; color:#8e867a; text-align:center; border-top:1px solid rgba(214,164,0,.14); font-size:.85rem; }
+    @media(max-width:900px) { .hero-grid,.split { grid-template-columns:1fr; } .mockup-wrap { order:-1; } .badges,.method { grid-template-columns:1fr 1fr; } .safe { display:none; } }
+    @media(max-width:560px) { .badges,.method { grid-template-columns:1fr; } .cta { width:100%; padding:17px 18px; } .hero { padding-top:110px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">Comunicação de <span class="gold">Autoridade</span></div>
+      <div class="safe"><span>Compra 100% segura</span><span>Acesso imediato</span><span>7 dias de garantia</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="mockup-wrap">
+          <div class="book-3d" aria-label="Mockup 3D do ebook Comunicação de Autoridade">
+            <span class="spine"></span>
+            <img src="assets/capa-comunicacao-autoridade.png" alt="Capa do ebook Comunicação de Autoridade" />
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow">Guia profissional completo</span>
+          <h1>Comunicação de <span class="gold">Autoridade</span></h1>
+          <p>Aprenda como transmitir confiança, inteligência e presença profissional sem precisar parecer artificial.</p>
+          <p>Um guia prático para profissionais que desejam falar com mais clareza, se posicionar melhor em reuniões e comunicar valor com segurança.</p>
+          <a class="cta" href="https://pay.hotmart.com/M105821923R" target="_blank" rel="noopener noreferrer">Quero desenvolver minha autoridade agora</a>
+          <span class="micro">Compra segura pela Hotmart • Acesso imediato após confirmação</span>
+          <div class="badges">
+            <div class="badge">Conteúdo prático e estratégico</div>
+            <div class="badge">Método P.R.E.S.</div>
+            <div class="badge">Aplicável no dia a dia</div>
+            <div class="badge">Garantia de 7 dias</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-panel">
+      <div class="container">
+        <h2 class="title">Você sabe muito, mas sente dificuldade em demonstrar?</h2>
+        <p class="subtitle">Muitos profissionais competentes permanecem invisíveis porque não conseguem transmitir segurança, clareza e presença ao se comunicar.</p>
+        <div class="split">
+          <div class="card"><h3>Este ebook é para quem:</h3><ul><li>Trava em reuniões importantes.</li><li>Sente que suas ideias são ignoradas.</li><li>Tem dificuldade em parecer confiante.</li><li>Sabe muito, mas não consegue transmitir isso.</li><li>Deseja construir presença e credibilidade profissional.</li></ul></div>
+          <div class="card"><h3>A verdade é simples:</h3><p>No mercado atual, competência sem comunicação gera invisibilidade.</p><br><p>Profissionais que sabem estruturar ideias, sustentar presença e transmitir clareza tendem a conquistar mais influência, reconhecimento e oportunidades.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="title">O que você vai aprender</h2>
+        <p class="subtitle">Um conteúdo moderno, objetivo e aplicável ao ambiente profissional.</p>
+        <div class="grid">
+          <div class="card"><h3>Presença Executiva</h3><p>Como parecer mais seguro, estável e confiante ao falar.</p></div>
+          <div class="card"><h3>Linguagem Corporal</h3><p>Postura, ritmo, gestos e comportamento que aumentam percepção de autoridade.</p></div>
+          <div class="card"><h3>Argumentação Estratégica</h3><p>Aprenda a defender ideias sem parecer agressivo ou inseguro.</p></div>
+          <div class="card"><h3>Storytelling Profissional</h3><p>Transforme experiências reais em comunicação mais memorável e persuasiva.</p></div>
+          <div class="card"><h3>Controle Emocional</h3><p>Técnicas para reduzir ansiedade e tensão em situações de exposição.</p></div>
+          <div class="card"><h3>Plano de Evolução</h3><p>Estratégia prática de 30 dias para desenvolver presença comunicacional.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-panel">
+      <div class="container">
+        <h2 class="title">Método <span class="gold">P.R.E.S.</span></h2>
+        <p class="subtitle">Uma estrutura para fortalecer sua comunicação profissional com presença, ritmo, estrutura e substância.</p>
+        <div class="method">
+          <div class="card"><div class="letter">P</div><h3>Presença</h3><p>Atenção total e estabilidade emocional ao se comunicar.</p></div>
+          <div class="card"><div class="letter">R</div><h3>Ritmo</h3><p>Controle de pausas, velocidade da fala e clareza verbal.</p></div>
+          <div class="card"><div class="letter">E</div><h3>Estrutura</h3><p>Organização lógica das ideias para gerar impacto.</p></div>
+          <div class="card"><div class="letter">S</div><h3>Substância</h3><p>Conteúdo forte, argumentação e profundidade intelectual.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="title">A transformação</h2>
+        <div class="grid">
+          <div class="card"><h3>De insegurança</h3><p>Para uma comunicação mais clara, firme e consciente.</p></div>
+          <div class="card"><h3>De silêncio</h3><p>Para posicionamento estratégico em reuniões e conversas profissionais.</p></div>
+          <div class="card"><h3>De tensão</h3><p>Para presença emocional mais estável e segura.</p></div>
+          <div class="card"><h3>De invisibilidade</h3><p>Para percepção de valor, autoridade e reconhecimento profissional.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="offer" id="oferta">
+      <div class="container">
+        <h2 class="title">Comece agora sua evolução profissional</h2>
+        <p class="subtitle">Desenvolva presença, clareza e autoridade na forma como você se comunica.</p>
+        <div class="price">R$ 47,90</div>
+        <p style="color:var(--muted); margin-bottom:32px;">Acesso imediato ao ebook completo em formato digital.</p>
+        <a class="cta" href="https://pay.hotmart.com/M105821923R" target="_blank" rel="noopener noreferrer">Quero acessar o ebook agora</a>
+        <div class="guarantee"><strong class="gold">Garantia de 7 dias:</strong><br>Se por qualquer motivo você não gostar do conteúdo, basta solicitar o reembolso dentro do prazo.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">Comunicação de Autoridade © 2026 • Todos os direitos reservados.</div></footer>
+</body>
+</html>
